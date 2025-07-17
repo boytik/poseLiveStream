@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDisplayName</key>
+    <string>Pose Live Stream</string>
+    <key>CFBundleIdentifier</key>
+    <string>Boytik.poseLiveStream</string>
+    <key>CFBundleName</key>
+    <string>poseLiveStream</string>
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Это приложение использует камеру для распознавания поз в реальном времени.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Это приложение может использовать фотобиблиотеку для сохранения обработанных изображений.</string>
+</dict>
+</plist>
