@@ -19,7 +19,8 @@
 		3E6AA2812E297E9000FE979B /* ImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6AA2802E297E9000FE979B /* ImageProcessor.swift */; };
 		3E6AA2832E29815500FE979B /* CapturedImageProcessor.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6AA2822E29815500FE979B /* CapturedImageProcessor.swift.swift */; };
 		3E6AA2852E29838900FE979B /* LiveVideoPoseProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6AA2842E29838900FE979B /* LiveVideoPoseProcessor.swift */; };
-		3E6AA2872E29843A00FE979B /*  CameraPermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6AA2862E29843A00FE979B /*  CameraPermissionService.swift */; };
+		3E6AA2872E29843A00FE979B /* CameraPermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6AA2862E29843A00FE979B /* CameraPermissionService.swift */; };
+		3E6AA2982E298F5800FE979B /* CameraSessionConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6AA2972E298F5800FE979B /* CameraSessionConfigurator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,7 +38,8 @@
 		3E6AA2802E297E9000FE979B /* ImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessor.swift; sourceTree = "<group>"; };
 		3E6AA2822E29815500FE979B /* CapturedImageProcessor.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapturedImageProcessor.swift.swift; sourceTree = "<group>"; };
 		3E6AA2842E29838900FE979B /* LiveVideoPoseProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveVideoPoseProcessor.swift; sourceTree = "<group>"; };
-		3E6AA2862E29843A00FE979B /*  CameraPermissionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " CameraPermissionService.swift"; sourceTree = "<group>"; };
+		3E6AA2862E29843A00FE979B /* CameraPermissionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPermissionService.swift; sourceTree = "<group>"; };
+		3E6AA2972E298F5800FE979B /* CameraSessionConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraSessionConfigurator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,7 +125,8 @@
 				3E6AA2802E297E9000FE979B /* ImageProcessor.swift */,
 				3E6AA2822E29815500FE979B /* CapturedImageProcessor.swift.swift */,
 				3E6AA2842E29838900FE979B /* LiveVideoPoseProcessor.swift */,
-				3E6AA2862E29843A00FE979B /*  CameraPermissionService.swift */,
+				3E6AA2862E29843A00FE979B /* CameraPermissionService.swift */,
+				3E6AA2972E298F5800FE979B /* CameraSessionConfigurator.swift */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -204,11 +207,12 @@
 				3E6AA2812E297E9000FE979B /* ImageProcessor.swift in Sources */,
 				3E1DD09A2E2915BA0082609E /* PoseProcessor.swift in Sources */,
 				3E1DD08C2E28FD570082609E /* NetWorkSevice.swift in Sources */,
+				3E6AA2982E298F5800FE979B /* CameraSessionConfigurator.swift in Sources */,
 				3E1DD0862E28FCBF0082609E /* PoseOverlayView.swift in Sources */,
 				3E6AA2832E29815500FE979B /* CapturedImageProcessor.swift.swift in Sources */,
 				3E6AA2852E29838900FE979B /* LiveVideoPoseProcessor.swift in Sources */,
 				3E1DD0842E28FC910082609E /* CameraView.swift in Sources */,
-				3E6AA2872E29843A00FE979B /*  CameraPermissionService.swift in Sources */,
+				3E6AA2872E29843A00FE979B /* CameraPermissionService.swift in Sources */,
 				3E1DD07D2E28FC450082609E /* ContentView.swift in Sources */,
 				3E1DD0882E28FCF40082609E /* CameraViewModel.swift in Sources */,
 				3E1DD07E2E28FC450082609E /* poseLiveStreamApp.swift in Sources */,

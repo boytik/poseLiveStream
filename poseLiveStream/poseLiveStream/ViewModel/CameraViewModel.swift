@@ -37,6 +37,8 @@ class CameraViewModel: NSObject, ObservableObject, AVCaptureVideoDataOutputSampl
     weak var overlayView: PoseOverlayView?
     private lazy var imageProcessor = ImageProcessor(config: config)
     private lazy var capturedImageProcessor = CapturedImageProcessor(config: config)
+    private let sessionConfigurator = CameraSessionConfigurator()
+
 
     private let livePoseProcessor = LiveVideoPoseProcessor()
     private let poseProcessor = PoseProcessor()
@@ -167,21 +169,17 @@ class CameraViewModel: NSObject, ObservableObject, AVCaptureVideoDataOutputSampl
         processingQueue.async { [weak self] in
             guard let self = self else { return }
             
-            self.session.beginConfiguration()
-            defer { self.session.commitConfiguration() }
-            
             do {
-                self.session.sessionPreset = .hd1280x720
-                try self.setupInputs()
-                self.setupOutputs()
+                try self.sessionConfigurator.configure(
+                    session: self.session,
+                    videoOutput: self.videoOutput,
+                    photoOutput: self.photoOutput
+                )
+                
+                self.videoOutput.setSampleBufferDelegate(self, queue: self.processingQueue)
                 
                 DispatchQueue.main.async {
                     self.cameraStatus = .configured
-                }
-            } catch let error as CameraError {
-                DispatchQueue.main.async {
-                    self.cameraStatus = .failed
-                    self.error = error
                 }
             } catch {
                 DispatchQueue.main.async {
@@ -191,58 +189,7 @@ class CameraViewModel: NSObject, ObservableObject, AVCaptureVideoDataOutputSampl
             }
         }
     }
-    
-    private func setupInputs() throws {
-        session.inputs.forEach { session.removeInput($0) }
-        
-        guard let camera = AVCaptureDevice.default(
-            .builtInWideAngleCamera,
-            for: .video,
-            position: .back
-        ) else {
-            throw CameraError.noCameraAvailable
-        }
-        
-        try camera.lockForConfiguration()
-        if camera.isFocusModeSupported(.continuousAutoFocus) {
-            camera.focusMode = .continuousAutoFocus
-        }
-        camera.unlockForConfiguration()
-        
-        let input = try AVCaptureDeviceInput(device: camera)
-        guard session.canAddInput(input) else {
-            throw CameraError.cannotAddInput
-        }
-        session.addInput(input)
-    }
-    
-    private func setupOutputs() {
-        session.outputs.forEach { session.removeOutput($0) }
-        
-        // Video Output для реального времени
-        videoOutput.setSampleBufferDelegate(self, queue: processingQueue)
-        videoOutput.alwaysDiscardsLateVideoFrames = true
-        videoOutput.videoSettings = [
-            kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA
-        ]
-        
-        if session.canAddOutput(videoOutput) {
-            session.addOutput(videoOutput)
-            
-            if let connection = videoOutput.connection(with: .video) {
-                connection.videoRotationAngle = 0
-                connection.isEnabled = true
-            }
-        } else {
-            error = .cannotAddOutput
-            cameraStatus = .failed
-        }
-        
-        if session.canAddOutput(photoOutput) {
-            session.addOutput(photoOutput)
-            photoOutput.connection(with: .video)?.isEnabled = true
-        }
-    }
+
     
     
     private func setupFrameRateCalculation() {
@@ -291,15 +238,26 @@ class CameraViewModel: NSObject, ObservableObject, AVCaptureVideoDataOutputSampl
     }
     
     private func shouldCapturePhoto() -> Bool {
-        guard session.isRunning,
-              !isProcessing,
-              let connection = photoOutput.connection(with: .video),
-              connection.isEnabled,
-              Date().timeIntervalSince(lastCaptureTime) >= config.captureInterval else {
+        guard session.isRunning else {
+            print("Session not running")
+            return false
+        }
+        guard !isProcessing else {
+            print("Already processing")
+            return false
+        }
+        guard let connection = photoOutput.connection(with: .video), connection.isEnabled else {
+            print("Photo output connection unavailable or disabled")
+            return false
+        }
+        guard Date().timeIntervalSince(lastCaptureTime) >= config.captureInterval else {
+            print("Waiting for capture interval")
             return false
         }
         return true
     }
+
+
     
     private func processCapturedImage(_ image: UIImage) {
         isProcessing = true

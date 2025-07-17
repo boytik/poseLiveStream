@@ -8,6 +8,8 @@
 import Foundation
 import AVFoundation
 import Vision
+import UIKit
+import ImageIO
 
 final class LiveVideoPoseProcessor {
     private let poseRequest = VNDetectHumanBodyPoseRequest()
@@ -20,7 +22,8 @@ final class LiveVideoPoseProcessor {
             return
         }
 
-        let handler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, orientation: .up)
+        let orientation = exifOrientationForCurrentDeviceOrientation()
+        let handler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, orientation: orientation)
 
         queue.async { [weak self] in
             guard let self = self else { return }
@@ -36,4 +39,15 @@ final class LiveVideoPoseProcessor {
             }
         }
     }
+
+    private func exifOrientationForCurrentDeviceOrientation() -> CGImagePropertyOrientation {
+        switch UIDevice.current.orientation {
+        case .portraitUpsideDown: return .left
+        case .landscapeLeft: return .upMirrored
+        case .landscapeRight: return .down
+        case .portrait: return .right
+        default: return .right
+        }
+    }
 }
+
