@@ -52,6 +52,16 @@ class CameraViewModel: NSObject, ObservableObject, AVCaptureVideoDataOutputSampl
     private var frameCount = 0
     private var lastFrameRateCalculation = Date()
     private var cancellables = Set<AnyCancellable>()
+    private lazy var photoHandler = PhotoCaptureHandler(
+        processor: capturedImageProcessor,
+        onProcessed: { [weak self] image in
+            self?.processedImage = image
+        },
+        onProcessingStateChanged: { [weak self] processing in
+            self?.isProcessing = processing
+        }
+    )
+
     
     // MARK: - Camera Status
     enum CameraStatus {
@@ -233,7 +243,7 @@ class CameraViewModel: NSObject, ObservableObject, AVCaptureVideoDataOutputSampl
         guard shouldCapturePhoto() else { return }
         
         let settings = AVCapturePhotoSettings()
-        photoOutput.capturePhoto(with: settings, delegate: self)
+        photoOutput.capturePhoto(with: settings, delegate: photoHandler)
         lastCaptureTime = Date()
     }
     
@@ -273,19 +283,4 @@ class CameraViewModel: NSObject, ObservableObject, AVCaptureVideoDataOutputSampl
         }
     }
 
-}
-
-// MARK: - AVCapturePhotoCaptureDelegate
-extension CameraViewModel: AVCapturePhotoCaptureDelegate {
-    func photoOutput(_ output: AVCapturePhotoOutput,
-                   didFinishProcessingPhoto photo: AVCapturePhoto,
-                   error: Error?) {
-        guard error == nil,
-              let imageData = photo.fileDataRepresentation(),
-              let image = UIImage(data: imageData) else {
-            isProcessing = false
-            return
-        }
-        processCapturedImage(image)
-    }
 }
