@@ -14,5 +14,16 @@
     <string>Это приложение использует камеру для распознавания поз в реальном времени.</string>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>Это приложение может использовать фотобиблиотеку для сохранения обработанных изображений.</string>
+    
+    <!-- Указываем, что требуется полноэкранный режим -->
+    <key>UIRequiresFullScreen</key>
+    <true/>
+
+    <!-- Только портретная ориентация -->
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+    </array>
 </dict>
 </plist>
+

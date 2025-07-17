@@ -45,15 +45,11 @@ class PoseOverlayView: UIView {
         lastUpdateTime = Date()
         
         if let observation = observation {
-            // Добавляем новое наблюдение в историю
             observations.append(observation)
-            
-            // Ограничиваем историю до 3 последних кадров
             if observations.count > 3 {
                 observations.removeFirst()
             }
         } else {
-            // Запускаем таймер для плавного исчезновения
             startFadeTimer()
         }
         
@@ -72,8 +68,7 @@ class PoseOverlayView: UIView {
         guard let context = UIGraphicsGetCurrentContext() else { return }
         
         context.clear(rect)
-        
-        // Рисуем все наблюдения с разной прозрачностью
+
         for (index, observation) in observations.enumerated() {
             let alpha = CGFloat(1.0) - (CGFloat(index) * 0.3)
             drawObservation(observation, in: context, alpha: alpha)
@@ -83,10 +78,7 @@ class PoseOverlayView: UIView {
     private func drawObservation(_ observation: VNHumanBodyPoseObservation,
                                in context: CGContext,
                                alpha: CGFloat) {
-        // Рисуем соединения
         drawConnections(in: context, observation: observation, alpha: alpha)
-        
-        // Рисуем суставы
         drawJoints(in: context, observation: observation, alpha: alpha)
     }
     
