@@ -33,6 +33,7 @@ class CameraViewModel: NSObject, ObservableObject, AVCaptureVideoDataOutputSampl
     @Published var frameRate: Double = 0
     
     // MARK: - Properties
+    private let poseHandler = LivePoseHandler()
     var config = Configuration()
     weak var overlayView: PoseOverlayView?
     private lazy var imageProcessor = ImageProcessor(config: config)
@@ -48,9 +49,10 @@ class CameraViewModel: NSObject, ObservableObject, AVCaptureVideoDataOutputSampl
     private var captureTimer: Timer?
     private var lastCaptureTime = Date.distantPast
     private var lastProcessedFrameTime = Date.distantPast
-    private var frameCount = 0
     private var lastFrameRateCalculation = Date()
-    private var cancellables = Set<AnyCancellable>()
+    private let frameRateTracker = FrameRateTracker()
+    private var cancellables = Set<AnyCancellable>() // оставляем, нужен для .sink
+
     private lazy var photoHandler = PhotoCaptureHandler(
         processor: capturedImageProcessor,
         onProcessed: { [weak self] image in
@@ -98,19 +100,23 @@ class CameraViewModel: NSObject, ObservableObject, AVCaptureVideoDataOutputSampl
         super.init()
         configureSession()
         setupFrameRateCalculation()
+
+        poseHandler.onUpdateOverlay = { [weak self] observation in
+            self?.overlayView?.updatePose(observation)
+        }
+        poseHandler.onClassified = { [weak self] result in
+            self?.latestPoseResult = result
+        }
+
         livePoseProcessor.onPoseDetected = { [weak self] observation in
-            guard let self = self else { return }
-            self.overlayView?.updatePose(observation)
-            if let obs = observation {
-                self.classifyPose(obs)
-            } else {
-                self.latestPoseResult = nil
-            }
+            self?.poseHandler.handle(observation: observation)
         }
     }
+
     
     deinit {
         stopSession()
+        frameRateTracker.stopTracking()
     }
     
     // MARK: - Session Management
@@ -195,14 +201,14 @@ class CameraViewModel: NSObject, ObservableObject, AVCaptureVideoDataOutputSampl
     
     
     private func setupFrameRateCalculation() {
-        Timer.publish(every: 1.0, on: .main, in: .common)
-            .autoconnect()
-            .sink { [weak self] _ in
-                guard let self = self else { return }
-                self.frameRate = Double(self.frameCount)
-                self.frameCount = 0
+        frameRateTracker.publisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] fps in
+                self?.frameRate = fps
             }
             .store(in: &cancellables)
+
+        frameRateTracker.startTracking()
     }
     
     // MARK: - Real-time Processing
@@ -213,8 +219,8 @@ class CameraViewModel: NSObject, ObservableObject, AVCaptureVideoDataOutputSampl
     }
     
     private func processVideoFrame(_ sampleBuffer: CMSampleBuffer) {
-        frameCount += 1
-
+        frameRateTracker.incrementFrame()
+        
         let now = Date()
         let interval = 1.0 / Double(config.processingFPS)
         guard now.timeIntervalSince(lastProcessedFrameTime) >= interval else { return }
@@ -222,6 +228,7 @@ class CameraViewModel: NSObject, ObservableObject, AVCaptureVideoDataOutputSampl
 
         livePoseProcessor.process(sampleBuffer: sampleBuffer)
     }
+
 
     
     // MARK: - Pose Classification

@@ -23,6 +23,8 @@
 		3E6AA2982E298F5800FE979B /* CameraSessionConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6AA2972E298F5800FE979B /* CameraSessionConfigurator.swift */; };
 		3E6AA29A2E29922C00FE979B /* PhotoCaptureHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6AA2992E29922C00FE979B /* PhotoCaptureHandler.swift */; };
 		3E6AA29C2E2992EA00FE979B /* PhotoCaptureTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6AA29B2E2992EA00FE979B /* PhotoCaptureTimer.swift */; };
+		3E6AA29E2E2993B500FE979B /* FrameRateTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6AA29D2E2993B500FE979B /* FrameRateTracker.swift */; };
+		3E6AA2A02E2994C400FE979B /* LivePoseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6AA29F2E2994C400FE979B /* LivePoseHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +46,8 @@
 		3E6AA2972E298F5800FE979B /* CameraSessionConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraSessionConfigurator.swift; sourceTree = "<group>"; };
 		3E6AA2992E29922C00FE979B /* PhotoCaptureHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCaptureHandler.swift; sourceTree = "<group>"; };
 		3E6AA29B2E2992EA00FE979B /* PhotoCaptureTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCaptureTimer.swift; sourceTree = "<group>"; };
+		3E6AA29D2E2993B500FE979B /* FrameRateTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameRateTracker.swift; sourceTree = "<group>"; };
+		3E6AA29F2E2994C400FE979B /* LivePoseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivePoseHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +137,8 @@
 				3E6AA2972E298F5800FE979B /* CameraSessionConfigurator.swift */,
 				3E6AA2992E29922C00FE979B /* PhotoCaptureHandler.swift */,
 				3E6AA29B2E2992EA00FE979B /* PhotoCaptureTimer.swift */,
+				3E6AA29D2E2993B500FE979B /* FrameRateTracker.swift */,
+				3E6AA29F2E2994C400FE979B /* LivePoseHandler.swift */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -213,12 +219,14 @@
 				3E6AA2812E297E9000FE979B /* ImageProcessor.swift in Sources */,
 				3E1DD09A2E2915BA0082609E /* PoseProcessor.swift in Sources */,
 				3E1DD08C2E28FD570082609E /* NetWorkSevice.swift in Sources */,
+				3E6AA29E2E2993B500FE979B /* FrameRateTracker.swift in Sources */,
 				3E6AA2982E298F5800FE979B /* CameraSessionConfigurator.swift in Sources */,
 				3E6AA29C2E2992EA00FE979B /* PhotoCaptureTimer.swift in Sources */,
 				3E1DD0862E28FCBF0082609E /* PoseOverlayView.swift in Sources */,
 				3E6AA29A2E29922C00FE979B /* PhotoCaptureHandler.swift in Sources */,
 				3E6AA2832E29815500FE979B /* CapturedImageProcessor.swift.swift in Sources */,
 				3E6AA2852E29838900FE979B /* LiveVideoPoseProcessor.swift in Sources */,
+				3E6AA2A02E2994C400FE979B /* LivePoseHandler.swift in Sources */,
 				3E1DD0842E28FC910082609E /* CameraView.swift in Sources */,
 				3E6AA2872E29843A00FE979B /* CameraPermissionService.swift in Sources */,
 				3E1DD07D2E28FC450082609E /* ContentView.swift in Sources */,
