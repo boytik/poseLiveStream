@@ -38,8 +38,7 @@ class CameraViewModel: NSObject, ObservableObject, AVCaptureVideoDataOutputSampl
     private lazy var imageProcessor = ImageProcessor(config: config)
     private lazy var capturedImageProcessor = CapturedImageProcessor(config: config)
     private let sessionConfigurator = CameraSessionConfigurator()
-
-
+    private var photoTimer: PhotoCaptureTimer?
     private let livePoseProcessor = LiveVideoPoseProcessor()
     private let poseProcessor = PoseProcessor()
     let session = AVCaptureSession()
@@ -141,22 +140,15 @@ class CameraViewModel: NSObject, ObservableObject, AVCaptureVideoDataOutputSampl
     }
     
     private func startCaptureTimer() {
-        DispatchQueue.main.async { [weak self] in
-            self?.captureTimer?.invalidate()
-            self?.captureTimer = Timer.scheduledTimer(
-                withTimeInterval: self?.config.captureInterval ?? 2.0,
-                repeats: true
-            ) { [weak self] _ in
-                self?.capturePhoto()
-            }
+        photoTimer = PhotoCaptureTimer(interval: config.captureInterval) { [weak self] in
+            self?.capturePhoto()
         }
+        photoTimer?.start()
     }
     
     private func stopCaptureTimer() {
-        DispatchQueue.main.async { [weak self] in
-            self?.captureTimer?.invalidate()
-            self?.captureTimer = nil
-        }
+        photoTimer?.stop()
+        photoTimer = nil
     }
     
     // MARK: - Configuration
