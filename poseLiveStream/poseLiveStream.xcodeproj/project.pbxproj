@@ -28,6 +28,7 @@
 		3E9FACFA2E2A4C2800852DDC /* PhotoHandlerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9FACF92E2A4C2800852DDC /* PhotoHandlerFactory.swift */; };
 		3E9FAD002E2A52B800852DDC /* CameraTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9FACFF2E2A52B800852DDC /* CameraTypes.swift */; };
 		3E9FAD022E2A537500852DDC /* CameraConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9FAD012E2A537500852DDC /* CameraConfiguration.swift */; };
+		3E9FAD042E2A5A3A00852DDC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9FAD032E2A5A3A00852DDC /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		3E9FACF92E2A4C2800852DDC /* PhotoHandlerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoHandlerFactory.swift; sourceTree = "<group>"; };
 		3E9FACFF2E2A52B800852DDC /* CameraTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraTypes.swift; sourceTree = "<group>"; };
 		3E9FAD012E2A537500852DDC /* CameraConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraConfiguration.swift; sourceTree = "<group>"; };
+		3E9FAD032E2A5A3A00852DDC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 				3E1DD0832E28FC910082609E /* CameraView.swift */,
 				3E1DD08D2E28FD730082609E /* PoseResultView.swift */,
 				3E1DD0852E28FCBF0082609E /* PoseOverlayView.swift */,
+				3E9FAD032E2A5A3A00852DDC /* SettingsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -248,6 +251,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E9FAD042E2A5A3A00852DDC /* SettingsView.swift in Sources */,
 				3E1DD08E2E28FD730082609E /* PoseResultView.swift in Sources */,
 				3E6AA2812E297E9000FE979B /* ImageProcessor.swift in Sources */,
 				3E1DD09A2E2915BA0082609E /* PoseProcessor.swift in Sources */,

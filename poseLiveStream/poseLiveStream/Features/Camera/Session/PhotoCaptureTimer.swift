@@ -18,7 +18,7 @@ final class PhotoCaptureTimer {
     }
 
     func start() {
-        stop() // гарантируем, что старый таймер уничтожен
+        stop()
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             self.timer = Timer.scheduledTimer(withTimeInterval: self.interval, repeats: true) { _ in
