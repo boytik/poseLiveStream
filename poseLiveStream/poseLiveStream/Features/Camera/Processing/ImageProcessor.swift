@@ -10,9 +10,9 @@ import CoreImage
 
 final class ImageProcessor {
     private let context = CIContext()
-    private let config: CameraViewModel.Configuration
+    private let config: CameraConfiguration
 
-    init(config: CameraViewModel.Configuration) {
+    init(config: CameraConfiguration) {
         self.config = config
     }
 

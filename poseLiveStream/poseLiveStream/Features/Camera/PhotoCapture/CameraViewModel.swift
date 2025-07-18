@@ -9,15 +9,6 @@ import CoreImage.CIFilterBuiltins
 
 
 class CameraViewModel: NSObject, ObservableObject, AVCaptureVideoDataOutputSampleBufferDelegate {
-    // MARK: - Configuration
-    struct Configuration {
-        var captureInterval: TimeInterval = 2.0
-        var blurRadius: CGFloat = 30
-        var preserveFace: Bool = true
-        var maxImageDimension: CGFloat = 640
-        var confidenceThreshold: Float = 0.3
-        var processingFPS: Int = 10
-    }
     
     // MARK: - Published Properties
     @Published var latestPoseResult: PoseClassificationResult?
@@ -29,7 +20,7 @@ class CameraViewModel: NSObject, ObservableObject, AVCaptureVideoDataOutputSampl
     
     // MARK: - Properties
     private let poseHandler = LivePoseHandler()
-    var config = Configuration()
+    var config = CameraConfiguration()
     weak var overlayView: PoseOverlayView?
     private let sessionConfigurator = CameraSessionConfigurator()
     private var photoTimer: PhotoCaptureTimer?

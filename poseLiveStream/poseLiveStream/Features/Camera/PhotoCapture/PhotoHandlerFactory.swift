@@ -6,7 +6,7 @@ import AVFoundation
 
 final class PhotoHandlerFactory {
     static func makeHandler(
-        config: CameraViewModel.Configuration,
+        config: CameraConfiguration,
         onProcessed: @escaping (UIImage?) -> Void,
         onProcessingStateChanged: @escaping (Bool) -> Void
     ) -> PhotoCaptureHandler {

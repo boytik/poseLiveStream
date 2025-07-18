@@ -2,12 +2,12 @@ import UIKit
 import Vision
 
 final class CapturedImageProcessor {
-    private let config: CameraViewModel.Configuration
+    private let config: CameraConfiguration
     private let imageProcessor: ImageProcessor
     private let poseRequest = VNDetectHumanBodyPoseRequest()
     private let faceRequest = VNDetectFaceRectanglesRequest()
 
-    init(config: CameraViewModel.Configuration) {
+    init(config: CameraConfiguration) {
         self.config = config
         self.imageProcessor = ImageProcessor(config: config)
     }
