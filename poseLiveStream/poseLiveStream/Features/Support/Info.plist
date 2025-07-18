@@ -4,26 +4,26 @@
 <dict>
     <key>CFBundleDisplayName</key>
     <string>Pose Live Stream</string>
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleIdentifier</key>
     <string>Boytik.poseLiveStream</string>
     <key>CFBundleName</key>
     <string>poseLiveStream</string>
-    <key>CFBundleExecutable</key>
-    <string>$(EXECUTABLE_NAME)</string>
     <key>NSCameraUsageDescription</key>
     <string>Это приложение использует камеру для распознавания поз в реальном времени.</string>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>Это приложение может использовать фотобиблиотеку для сохранения обработанных изображений.</string>
-    
-    <!-- Указываем, что требуется полноэкранный режим -->
     <key>UIRequiresFullScreen</key>
     <true/>
-
-    <!-- Только портретная ориентация -->
+    <key>UIStatusBarStyle</key>
+    <string></string>
     <key>UISupportedInterfaceOrientations</key>
     <array>
         <string>UIInterfaceOrientationPortrait</string>
     </array>
+    <key>UILaunchStoryboardName</key>
+    <string>LaunchScreen</string>
 </dict>
 </plist>
 

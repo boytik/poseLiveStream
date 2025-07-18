@@ -29,6 +29,7 @@
 		3E9FAD002E2A52B800852DDC /* CameraTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9FACFF2E2A52B800852DDC /* CameraTypes.swift */; };
 		3E9FAD022E2A537500852DDC /* CameraConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9FAD012E2A537500852DDC /* CameraConfiguration.swift */; };
 		3E9FAD042E2A5A3A00852DDC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9FAD032E2A5A3A00852DDC /* SettingsView.swift */; };
+		3E9FAD062E2A649C00852DDC /* emptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9FAD052E2A649C00852DDC /* emptyView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		3E9FACFF2E2A52B800852DDC /* CameraTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraTypes.swift; sourceTree = "<group>"; };
 		3E9FAD012E2A537500852DDC /* CameraConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraConfiguration.swift; sourceTree = "<group>"; };
 		3E9FAD032E2A5A3A00852DDC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		3E9FAD052E2A649C00852DDC /* emptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emptyView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				3E9FACFE2E2A4DE000852DDC /* Features */,
+				3E9FAD052E2A649C00852DDC /* emptyView.swift */,
 			);
 			path = poseLiveStream;
 			sourceTree = "<group>";
@@ -267,6 +270,7 @@
 				3E6AA2832E29815500FE979B /* CapturedImageProcessor.swift.swift in Sources */,
 				3E6AA2852E29838900FE979B /* LiveVideoPoseProcessor.swift in Sources */,
 				3E6AA2A02E2994C400FE979B /* LivePoseHandler.swift in Sources */,
+				3E9FAD062E2A649C00852DDC /* emptyView.swift in Sources */,
 				3E1DD0842E28FC910082609E /* CameraView.swift in Sources */,
 				3E6AA2872E29843A00FE979B /* CameraPermissionService.swift in Sources */,
 				3E1DD07D2E28FC450082609E /* ContentView.swift in Sources */,

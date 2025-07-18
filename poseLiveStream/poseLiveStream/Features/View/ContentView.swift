@@ -14,37 +14,46 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
+            // Камера на весь экран
             CameraView(viewModel: cameraVM)
                 .edgesIgnoringSafeArea(.all)
             VStack {
-                HStack {
-                    Spacer()
-                    
+                // Верхняя информационная панель - прикреплена к верху
+                VStack {
+                    // Отображение результата позы - уменьшенный размер
                     if let result = cameraVM.latestPoseResult {
                         PoseResultView(result: result)
-                            .padding(8)
-                            .background(Color.black.opacity(0.5))
-                            .cornerRadius(8)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(
+                                Capsule()
+                                    .fill(Color.black.opacity(0.7))
+                            )
+                            .transition(.opacity)
                     }
                     
-                    if cameraVM.isProcessing {
-                        ProgressView()
-                            .padding(8)
-                            .background(Color.black.opacity(0.5))
-                            .cornerRadius(8)
-                    }
+                    Spacer() // Остальное содержимое сдвигается вниз
                 }
-                .padding()
+                .frame(maxWidth: .infinity, alignment: .top)
+                .padding(.top, 8)
                 
                 Spacer()
-                VStack(spacing: 12) {
+                
+                // Нижняя панель управления
+                VStack(spacing: 20) {
+                    // Превью обработанного фото
                     if cameraVM.processedImage != nil {
                         ProcessedImagePreview(viewModel: cameraVM)
+                            .transition(.asymmetric(
+                                insertion: .opacity.combined(with: .scale(scale: 0.8)),
+                                removal: .opacity
+                            ))
                     }
                     
+                    // Кнопка настроек
                     SettingsButton(showingSettings: $showingSettings)
+                        .padding(.bottom, 30)
                 }
-                .padding()
             }
         }
         .sheet(isPresented: $showingSettings) {
@@ -64,14 +73,32 @@ struct SettingsButton: View {
     
     var body: some View {
         Button(action: {
-            showingSettings.toggle()
+            withAnimation(.interactiveSpring(response: 0.3, dampingFraction: 0.6)) {
+                showingSettings.toggle()
+            }
         }) {
-            Image(systemName: "gear")
-                .font(.title)
-                .padding()
-                .background(Circle().fill(Color.black.opacity(0.5)))
+            Image(systemName: "gearshape.fill")
+                .font(.system(size: 24))
                 .foregroundColor(.white)
+                .frame(width: 56, height: 56)
+                .background(
+                    Circle()
+                        .fill(Color.black.opacity(0.5))
+                .shadow(color: .black.opacity(0.3), radius: 8, x: 0, y: 4))
+                .overlay(
+                    Circle()
+                        .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                )
         }
+        .buttonStyle(ScaleButtonStyle())
     }
 }
 
+struct ScaleButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.9 : 1.0)
+            .opacity(configuration.isPressed ? 0.8 : 1.0)
+            .animation(.easeInOut(duration: 0.2), value: configuration.isPressed)
+    }
+}
