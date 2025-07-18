@@ -1,9 +1,4 @@
-//
-//  CameraViewModel.swift
-//  poseLiveStream
-//
-//  Created by Евгений on 17.07.2025.
-//
+
 
 import SwiftUI
 import AVFoundation
@@ -36,8 +31,6 @@ class CameraViewModel: NSObject, ObservableObject, AVCaptureVideoDataOutputSampl
     private let poseHandler = LivePoseHandler()
     var config = Configuration()
     weak var overlayView: PoseOverlayView?
-    private lazy var imageProcessor = ImageProcessor(config: config)
-    private lazy var capturedImageProcessor = CapturedImageProcessor(config: config)
     private let sessionConfigurator = CameraSessionConfigurator()
     private var photoTimer: PhotoCaptureTimer?
     private let livePoseProcessor = LiveVideoPoseProcessor()
@@ -51,49 +44,19 @@ class CameraViewModel: NSObject, ObservableObject, AVCaptureVideoDataOutputSampl
     private var lastProcessedFrameTime = Date.distantPast
     private var lastFrameRateCalculation = Date()
     private let frameRateTracker = FrameRateTracker()
-    private var cancellables = Set<AnyCancellable>() // оставляем, нужен для .sink
-
-    private lazy var photoHandler = PhotoCaptureHandler(
-        processor: capturedImageProcessor,
-        onProcessed: { [weak self] image in
-            self?.processedImage = image
-        },
-        onProcessingStateChanged: { [weak self] processing in
-            self?.isProcessing = processing
-        }
-    )
-
+    private var cancellables = Set<AnyCancellable>()
     
-    // MARK: - Camera Status
-    enum CameraStatus {
-        case unconfigured
-        case configured
-        case unauthorized
-        case failed
-    }
-    
-    // MARK: - Error Handling
-    enum CameraError: Error {
-        case noCameraAvailable
-        case cannotAddInput
-        case cannotAddOutput
-        case permissionDenied
-        case configurationFailed
-        case networkError(Error)
-        case processingFailed
-        
-        var localizedDescription: String {
-            switch self {
-            case .noCameraAvailable: return "Camera not available"
-            case .cannotAddInput: return "Can't add camera input"
-            case .cannotAddOutput: return "Can't add camera output"
-            case .permissionDenied: return "Permission denied"
-            case .configurationFailed: return "Configuration failed"
-            case .networkError(let error): return "Network error: \(error.localizedDescription)"
-            case .processingFailed: return "Image processing failed"
+    private lazy var photoHandler: PhotoCaptureHandler = {
+        PhotoHandlerFactory.makeHandler(
+            config: config,
+            onProcessed: { [weak self] image in
+                self?.processedImage = image
+            },
+            onProcessingStateChanged: { [weak self] processing in
+                self?.isProcessing = processing
             }
-        }
-    }
+        )
+    }()
     
     // MARK: - Lifecycle
     override init() {
@@ -197,8 +160,6 @@ class CameraViewModel: NSObject, ObservableObject, AVCaptureVideoDataOutputSampl
             }
         }
     }
-
-    
     
     private func setupFrameRateCalculation() {
         frameRateTracker.publisher
@@ -212,6 +173,7 @@ class CameraViewModel: NSObject, ObservableObject, AVCaptureVideoDataOutputSampl
     }
     
     // MARK: - Real-time Processing
+    
     func captureOutput(_ output: AVCaptureOutput,
                      didOutput sampleBuffer: CMSampleBuffer,
                      from connection: AVCaptureConnection) {
@@ -228,16 +190,9 @@ class CameraViewModel: NSObject, ObservableObject, AVCaptureVideoDataOutputSampl
 
         livePoseProcessor.process(sampleBuffer: sampleBuffer)
     }
-
-
-    
-    // MARK: - Pose Classification
-    private func classifyPose(_ observation: VNHumanBodyPoseObservation) {
-        latestPoseResult = poseProcessor.classifyPose(observation)
-    }
-    
     
     // MARK: - Photo Capture
+    
     func capturePhoto() {
         guard shouldCapturePhoto() else { return }
         
@@ -264,22 +219,6 @@ class CameraViewModel: NSObject, ObservableObject, AVCaptureVideoDataOutputSampl
             return false
         }
         return true
-    }
-
-
-    
-    private func processCapturedImage(_ image: UIImage) {
-        isProcessing = true
-        processingQueue.async { [weak self] in
-            guard let self = self else { return }
-            
-            let result = self.capturedImageProcessor.process(image: image)
-
-            DispatchQueue.main.async {
-                self.processedImage = result
-                self.isProcessing = false
-            }
-        }
     }
 
 }

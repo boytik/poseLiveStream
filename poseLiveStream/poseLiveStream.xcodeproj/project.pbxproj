@@ -25,6 +25,8 @@
 		3E6AA29C2E2992EA00FE979B /* PhotoCaptureTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6AA29B2E2992EA00FE979B /* PhotoCaptureTimer.swift */; };
 		3E6AA29E2E2993B500FE979B /* FrameRateTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6AA29D2E2993B500FE979B /* FrameRateTracker.swift */; };
 		3E6AA2A02E2994C400FE979B /* LivePoseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6AA29F2E2994C400FE979B /* LivePoseHandler.swift */; };
+		3E9FACFA2E2A4C2800852DDC /* PhotoHandlerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9FACF92E2A4C2800852DDC /* PhotoHandlerFactory.swift */; };
+		3E9FAD002E2A52B800852DDC /* CameraTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9FACFF2E2A52B800852DDC /* CameraTypes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +50,8 @@
 		3E6AA29B2E2992EA00FE979B /* PhotoCaptureTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCaptureTimer.swift; sourceTree = "<group>"; };
 		3E6AA29D2E2993B500FE979B /* FrameRateTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameRateTracker.swift; sourceTree = "<group>"; };
 		3E6AA29F2E2994C400FE979B /* LivePoseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivePoseHandler.swift; sourceTree = "<group>"; };
+		3E9FACF92E2A4C2800852DDC /* PhotoHandlerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoHandlerFactory.swift; sourceTree = "<group>"; };
+		3E9FACFF2E2A52B800852DDC /* CameraTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraTypes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,7 +68,6 @@
 		3E1DD0622E28FC010082609E = {
 			isa = PBXGroup;
 			children = (
-				3E1DD0982E29158F0082609E /* Camera */,
 				3E1DD07C2E28FC450082609E /* poseLiveStream */,
 				3E1DD06C2E28FC010082609E /* Products */,
 			);
@@ -81,11 +84,7 @@
 		3E1DD07C2E28FC450082609E /* poseLiveStream */ = {
 			isa = PBXGroup;
 			children = (
-				3E1DD07B2E28FC450082609E /* poseLiveStreamApp.swift */,
-				3E1DD0952E2910160082609E /* NetWork */,
-				3E1DD0902E28FDCD0082609E /* ViewModel */,
-				3E1DD08F2E28FDC50082609E /* View */,
-				3E1DD0802E28FC490082609E /* Support */,
+				3E9FACFE2E2A4DE000852DDC /* Features */,
 			);
 			path = poseLiveStream;
 			sourceTree = "<group>";
@@ -95,6 +94,7 @@
 			children = (
 				3E1DD0792E28FC450082609E /* Assets.xcassets */,
 				3E1DD0912E2901320082609E /* Info.plist */,
+				3E1DD07B2E28FC450082609E /* poseLiveStreamApp.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -110,14 +110,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		3E1DD0902E28FDCD0082609E /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				3E1DD0872E28FCF40082609E /* CameraViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		3E1DD0952E2910160082609E /* NetWork */ = {
 			isa = PBXGroup;
 			children = (
@@ -129,18 +121,56 @@
 		3E1DD0982E29158F0082609E /* Camera */ = {
 			isa = PBXGroup;
 			children = (
+				3E9FACFD2E2A4D0800852DDC /* PhotoCapture */,
+				3E9FACFC2E2A4CFD00852DDC /* Session */,
+				3E9FACFB2E2A4CDF00852DDC /* Processing */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
+		3E9FACFB2E2A4CDF00852DDC /* Processing */ = {
+			isa = PBXGroup;
+			children = (
+				3E6AA2842E29838900FE979B /* LiveVideoPoseProcessor.swift */,
 				3E1DD0992E2915BA0082609E /* PoseProcessor.swift */,
 				3E6AA2802E297E9000FE979B /* ImageProcessor.swift */,
 				3E6AA2822E29815500FE979B /* CapturedImageProcessor.swift.swift */,
-				3E6AA2842E29838900FE979B /* LiveVideoPoseProcessor.swift */,
-				3E6AA2862E29843A00FE979B /* CameraPermissionService.swift */,
+			);
+			path = Processing;
+			sourceTree = "<group>";
+		};
+		3E9FACFC2E2A4CFD00852DDC /* Session */ = {
+			isa = PBXGroup;
+			children = (
 				3E6AA2972E298F5800FE979B /* CameraSessionConfigurator.swift */,
-				3E6AA2992E29922C00FE979B /* PhotoCaptureHandler.swift */,
+				3E6AA2862E29843A00FE979B /* CameraPermissionService.swift */,
 				3E6AA29B2E2992EA00FE979B /* PhotoCaptureTimer.swift */,
 				3E6AA29D2E2993B500FE979B /* FrameRateTracker.swift */,
 				3E6AA29F2E2994C400FE979B /* LivePoseHandler.swift */,
+				3E9FACFF2E2A52B800852DDC /* CameraTypes.swift */,
 			);
-			path = Camera;
+			path = Session;
+			sourceTree = "<group>";
+		};
+		3E9FACFD2E2A4D0800852DDC /* PhotoCapture */ = {
+			isa = PBXGroup;
+			children = (
+				3E9FACF92E2A4C2800852DDC /* PhotoHandlerFactory.swift */,
+				3E6AA2992E29922C00FE979B /* PhotoCaptureHandler.swift */,
+				3E1DD0872E28FCF40082609E /* CameraViewModel.swift */,
+			);
+			path = PhotoCapture;
+			sourceTree = "<group>";
+		};
+		3E9FACFE2E2A4DE000852DDC /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				3E1DD0982E29158F0082609E /* Camera */,
+				3E1DD0952E2910160082609E /* NetWork */,
+				3E1DD08F2E28FDC50082609E /* View */,
+				3E1DD0802E28FC490082609E /* Support */,
+			);
+			path = Features;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -218,9 +248,11 @@
 				3E1DD08E2E28FD730082609E /* PoseResultView.swift in Sources */,
 				3E6AA2812E297E9000FE979B /* ImageProcessor.swift in Sources */,
 				3E1DD09A2E2915BA0082609E /* PoseProcessor.swift in Sources */,
+				3E9FAD002E2A52B800852DDC /* CameraTypes.swift in Sources */,
 				3E1DD08C2E28FD570082609E /* NetWorkSevice.swift in Sources */,
 				3E6AA29E2E2993B500FE979B /* FrameRateTracker.swift in Sources */,
 				3E6AA2982E298F5800FE979B /* CameraSessionConfigurator.swift in Sources */,
+				3E9FACFA2E2A4C2800852DDC /* PhotoHandlerFactory.swift in Sources */,
 				3E6AA29C2E2992EA00FE979B /* PhotoCaptureTimer.swift in Sources */,
 				3E1DD0862E28FCBF0082609E /* PoseOverlayView.swift in Sources */,
 				3E6AA29A2E29922C00FE979B /* PhotoCaptureHandler.swift in Sources */,
@@ -369,7 +401,7 @@
 				DEVELOPMENT_TEAM = 6WBSBWSNWN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = "$(SRCROOT)/poseLiveStream/Support/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/poseLiveStream/Features/Support/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -399,7 +431,7 @@
 				DEVELOPMENT_TEAM = 6WBSBWSNWN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = "$(SRCROOT)/poseLiveStream/Support/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/poseLiveStream/Features/Support/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
