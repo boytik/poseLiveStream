@@ -66,7 +66,7 @@ struct SettingsView: View {
                         Image(systemName: "face.smiling")
                             .foregroundColor(.blue)
                             .frame(width: 30)
-                        Toggle("Preserve Faces", isOn: $viewModel.config.preserveFace)
+                        Toggle("Preserve Faces", isOn: $viewModel.config.preserveFaceWithoutBlur)
                     }
                 }
             }

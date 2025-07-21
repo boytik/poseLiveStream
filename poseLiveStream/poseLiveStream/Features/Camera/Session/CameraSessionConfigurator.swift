@@ -1,9 +1,3 @@
-//
-//  CameraSessionConfigurator.swift
-//  poseLiveStream
-//
-//  Created by Евгений on 17.07.2025.
-//
 
 
 import AVFoundation
@@ -15,6 +9,8 @@ final class CameraSessionConfigurator {
         case cannotAddInput
         case cannotAddOutput
     }
+    
+    //MARK: Methods
     
     func configure(session: AVCaptureSession,
                    videoOutput: AVCaptureVideoDataOutput,
@@ -28,6 +24,7 @@ final class CameraSessionConfigurator {
         try configureInput(for: session)
         try configureOutputs(session: session, videoOutput: videoOutput, photoOutput: photoOutput)
     }
+    //MARK: Private Methods
     
     private func configureInput(for session: AVCaptureSession) throws {
         session.inputs.forEach { session.removeInput($0) }

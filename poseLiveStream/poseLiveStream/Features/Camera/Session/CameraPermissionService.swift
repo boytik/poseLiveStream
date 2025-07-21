@@ -1,12 +1,9 @@
-//
-//   CameraPermissionService.swift
-//  poseLiveStream
-//
-//  Created by Евгений on 17.07.2025.
-//
+
+
 import AVFoundation
 
 final class CameraPermissionService {
+    ///Проверка доступа к камере
     static func checkCameraPermission(completion: @escaping (Bool) -> Void) {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized:

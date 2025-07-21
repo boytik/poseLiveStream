@@ -1,9 +1,4 @@
-//
-//  LiveVideoPoseProcessor.swift
-//  poseLiveStream
-//
-//  Created by Евгений on 17.07.2025.
-//
+
 
 import Foundation
 import AVFoundation
@@ -12,11 +7,15 @@ import UIKit
 import ImageIO
 
 final class LiveVideoPoseProcessor {
+    //MARK: Properties
+    
     private let poseRequest = VNDetectHumanBodyPoseRequest()
     private let queue = DispatchQueue(label: "live.pose.processor")
 
     var onPoseDetected: ((VNHumanBodyPoseObservation?) -> Void)?
 
+    //MARK: Method
+    
     func process(sampleBuffer: CMSampleBuffer) {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
             return
@@ -39,7 +38,9 @@ final class LiveVideoPoseProcessor {
             }
         }
     }
-
+    
+    //MARK: Private Method
+    
     private func exifOrientationForCurrentDeviceOrientation() -> CGImagePropertyOrientation {
         switch UIDevice.current.orientation {
         case .portraitUpsideDown: return .left

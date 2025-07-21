@@ -18,9 +18,7 @@ struct ContentView: View {
             CameraView(viewModel: cameraVM)
                 .edgesIgnoringSafeArea(.all)
             VStack {
-                // Верхняя информационная панель - прикреплена к верху
                 VStack {
-                    // Отображение результата позы - уменьшенный размер
                     if let result = cameraVM.latestPoseResult {
                         PoseResultView(result: result)
                             .padding(.horizontal, 8)
@@ -31,17 +29,14 @@ struct ContentView: View {
                             )
                             .transition(.opacity)
                     }
-                    
-                    Spacer() // Остальное содержимое сдвигается вниз
+                    Spacer()
                 }
                 .frame(maxWidth: .infinity, alignment: .top)
                 .padding(.top, 8)
                 
                 Spacer()
                 
-                // Нижняя панель управления
                 VStack(spacing: 20) {
-                    // Превью обработанного фото
                     if cameraVM.processedImage != nil {
                         ProcessedImagePreview(viewModel: cameraVM)
                             .transition(.asymmetric(
@@ -49,8 +44,6 @@ struct ContentView: View {
                                 removal: .opacity
                             ))
                     }
-                    
-                    // Кнопка настроек
                     SettingsButton(showingSettings: $showingSettings)
                         .padding(.bottom, 30)
                 }

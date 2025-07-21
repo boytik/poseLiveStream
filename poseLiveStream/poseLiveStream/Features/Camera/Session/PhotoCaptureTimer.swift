@@ -1,22 +1,21 @@
-//
-//  PhotoCaptureTimer.swift
-//  poseLiveStream
-//
-//  Created by Евгений on 17.07.2025.
-//
+
 
 import Foundation
 
 final class PhotoCaptureTimer {
+    
+    //MARK: Properties
     private var timer: Timer?
     private let interval: TimeInterval
     private let action: () -> Void
-
+    
+    //MARK: Init
     init(interval: TimeInterval, action: @escaping () -> Void) {
         self.interval = interval
         self.action = action
     }
-
+    
+    //MARK: Methods
     func start() {
         stop()
         DispatchQueue.main.async { [weak self] in
@@ -26,12 +25,13 @@ final class PhotoCaptureTimer {
             }
         }
     }
-
+    
     func stop() {
         timer?.invalidate()
         timer = nil
     }
-
+    
+    //MARK: Life Cycle
     deinit {
         stop()
     }

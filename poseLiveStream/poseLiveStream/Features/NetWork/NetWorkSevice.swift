@@ -8,6 +8,8 @@
 import UIKit
 import Foundation
 
+//MARK: We haven't Use Network Service YET
+
 class NetworkService {
     private let baseURL = "https://your-server.com/api/" 
     private let session = URLSession.shared

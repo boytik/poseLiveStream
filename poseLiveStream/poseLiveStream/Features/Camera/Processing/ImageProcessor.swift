@@ -9,13 +9,20 @@ import Vision
 import CoreImage
 
 final class ImageProcessor {
+    
+    //MARK: Properties
+    
     private let context = CIContext()
     private let config: CameraConfiguration
 
+    //MARK: Init
+    
     init(config: CameraConfiguration) {
         self.config = config
     }
 
+    //MARK: Methods
+    
     func processImage(
         _ image: UIImage,
         pose: VNHumanBodyPoseObservation,
@@ -41,7 +48,8 @@ final class ImageProcessor {
         }
     }
 
-    func calculateBodyRegion(for pose: VNHumanBodyPoseObservation, imageSize: CGSize) -> CGRect {
+    func calculateBodyRegion(for pose: VNHumanBodyPoseObservation,
+                             imageSize: CGSize) -> CGRect {
         let keyPoints: [VNHumanBodyPoseObservation.JointName] = [.leftShoulder, .rightShoulder, .leftHip, .rightHip]
 
         var minX = CGFloat.infinity
@@ -70,7 +78,10 @@ final class ImageProcessor {
         return CGRect(x: centerX - width / 2, y: centerY - height / 2, width: width, height: height)
     }
 
-    private func applyBlur(to image: CIImage, in region: CGRect, excluding faces: [CGRect]) -> CIImage {
+    //MARK: Privatte Methods
+    
+    private func applyBlur(to image: CIImage, in region: CGRect,
+                           excluding faces: [CGRect]) -> CIImage {
         let blurFilter = CIFilter.gaussianBlur()
         blurFilter.inputImage = image
         blurFilter.radius = Float(config.blurRadius)
@@ -86,7 +97,8 @@ final class ImageProcessor {
         return blend.outputImage ?? image
     }
 
-    private func createMask(imageSize: CGSize, bodyRegion: CGRect, faceRects: [CGRect]) -> CIImage {
+    private func createMask(imageSize: CGSize, bodyRegion: CGRect,
+                            faceRects: [CGRect]) -> CIImage {
         let renderer = UIGraphicsImageRenderer(size: imageSize)
         let maskImage = renderer.image { ctx in
             UIColor.white.setFill()
@@ -94,7 +106,7 @@ final class ImageProcessor {
             UIColor.black.setFill()
             ctx.fill(bodyRegion)
 
-            if config.preserveFace {
+            if config.preserveFaceWithoutBlur {
                 for face in faceRects {
                     let converted = CGRect(
                         x: face.origin.x * imageSize.width,
@@ -109,7 +121,8 @@ final class ImageProcessor {
         return CIImage(image: maskImage) ?? CIImage(color: CIColor.white)
     }
 
-    private func drawPoseLandmarks(on image: CIImage, pose: VNHumanBodyPoseObservation?) -> UIImage? {
+    private func drawPoseLandmarks(on image: CIImage,
+                                   pose: VNHumanBodyPoseObservation?) -> UIImage? {
         guard let pose = pose else { return UIImage(ciImage: image) }
         let size = image.extent.size
 
@@ -121,7 +134,8 @@ final class ImageProcessor {
         }
     }
 
-    private func drawConnections(_ pose: VNHumanBodyPoseObservation, context: CGContext, size: CGSize) {
+    private func drawConnections(_ pose: VNHumanBodyPoseObservation,
+                                 context: CGContext, size: CGSize) {
         let connections: [(VNHumanBodyPoseObservation.JointName, VNHumanBodyPoseObservation.JointName)] = [
             (.leftShoulder, .leftElbow), (.leftElbow, .leftWrist),
             (.rightShoulder, .rightElbow), (.rightElbow, .rightWrist),
@@ -147,7 +161,8 @@ final class ImageProcessor {
         }
     }
 
-    private func drawJoints(_ pose: VNHumanBodyPoseObservation, context: CGContext, size: CGSize) {
+    private func drawJoints(_ pose: VNHumanBodyPoseObservation,
+                            context: CGContext, size: CGSize) {
         context.setFillColor(UIColor.systemOrange.cgColor)
         let joints = try? pose.recognizedPoints(.all)
 

@@ -4,10 +4,15 @@ import AVFoundation
 import UIKit
 
 final class PhotoCaptureHandler: NSObject, AVCapturePhotoCaptureDelegate {
+    
+    //MARK: Properties
+    
     private let processor: CapturedImageProcessor
     private let onProcessed: (UIImage?) -> Void
     private let onProcessingStateChanged: (Bool) -> Void
 
+    //MARK: Init
+    
     init(
         processor: CapturedImageProcessor,
         onProcessed: @escaping (UIImage?) -> Void,
@@ -18,6 +23,7 @@ final class PhotoCaptureHandler: NSObject, AVCapturePhotoCaptureDelegate {
         self.onProcessingStateChanged = onProcessingStateChanged
     }
 
+    //MARK: Method
     func photoOutput(_ output: AVCapturePhotoOutput,
                      didFinishProcessingPhoto photo: AVCapturePhoto,
                      error: Error?) {

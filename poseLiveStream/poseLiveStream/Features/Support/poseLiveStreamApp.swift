@@ -12,7 +12,6 @@ struct PoseDetectionApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-//            emptyView()
         }
     }
 }

@@ -1,14 +1,12 @@
-//
-//  FrameRateTracker.swift
-//  poseLiveStream
-//
-//  Created by Евгений on 17.07.2025.
-//
+
 
 import Combine
 import Foundation
 
+///Обработка частоты кадров для вывода на дисплей
 final class FrameRateTracker {
+    
+    //MARK: Properties
     @Published private(set) var frameRate: Double = 0
     private var frameCount = 0
     private var timer: AnyCancellable?
@@ -17,6 +15,7 @@ final class FrameRateTracker {
         $frameRate.eraseToAnyPublisher()
     }
     
+    //MARK: Methods
     func startTracking() {
         stopTracking()
         timer = Timer
@@ -38,6 +37,7 @@ final class FrameRateTracker {
         frameCount += 1
     }
     
+    //MARK: Life Cycle
     deinit {
         stopTracking()
     }
